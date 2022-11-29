@@ -5,6 +5,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -15,8 +19,11 @@ import java.util.Random;
 // + implement its methods
 
 public class MainActivity extends AppCompatActivity implements CourseRecyclerviewInterface {
+    //65. add --> static final String TAG = "MainActivity";
+    static final String TAG = "MainActivity";
+
     // 1. change constraintLayout on XML to RecyclerView layout
-    // 2. declare an object from recyclerView:
+    // 2. declare an object from recyclerView --> RecyclerView mRecyclerView;
     RecyclerView mRecyclerView;
 
     // 12. need to create a list of objects from the course class:
@@ -116,5 +123,33 @@ public class MainActivity extends AppCompatActivity implements CourseRecyclervie
 
     }
     //44. go to constructor method for the Adapter class (courseAdapter)
+
+
+    //64(cont.) --> entire --> public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.course_menu, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                //66. add --> Log.d(TAG,"Line 58: Query = "+s); --> query coming through but problem w/ filtering
+                // therefore in Adapter --> need to change getItemCount() to return mCoursesFiltered (filtered list) NOT mCourse
+                // and need to change onBindViewHolder --> Course course = mCourseFiltered....
+                Log.d(TAG,"Line 58: Query = "+s);
+
+                adapter.getFilter().filter(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+        return true;
+    }
 
 }

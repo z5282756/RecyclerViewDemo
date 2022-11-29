@@ -33,8 +33,8 @@ public class Course {
     public void setName(String name) {
         this.name = name;
     }
-    // 9.whenever you want to instatiate an object from this class and pass some values to be part
-    // of the object or insteace
+    // 9.whenever you want to instantiate an object from this class and pass some values to be part
+    // of the object or instance
     // 9.you need to pass the values using constructor method (Object Orienting Programming)
     // 9.constructor method must be public to access outside this class --> (go to 9(cont.))
 
